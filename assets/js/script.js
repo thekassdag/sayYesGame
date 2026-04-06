@@ -1,9 +1,29 @@
-// Helper functions for UTF-8 safe Base64 encoding/decoding
-const encodeData = (data) => btoa(encodeURIComponent(JSON.stringify(data)));
+// Helper functions for UTF-8 safe Base64 encoding/decoding (Modern)
+const encodeData = (data) => {
+    const json = JSON.stringify(data);
+    const bytes = new TextEncoder().encode(json);
+    const binString = Array.from(bytes, (byte) => String.fromCharCode(byte)).join("");
+    return btoa(binString);
+};
+
 const decodeData = (str) => {
     try {
-        return JSON.parse(decodeURIComponent(escape(atob(str))));
+        const binary = atob(str);
+        // Try modern TextDecoder first (default UTF-8)
+        try {
+            const bytes = new Uint8Array(binary.length);
+            for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+            const json = new TextDecoder().decode(bytes);
+            return JSON.parse(json);
+        } catch (e) {
+            // Fallback for older formats (Simple JSON or URI-encoded)
+            try { return JSON.parse(binary); } catch (e) {}
+            try { return JSON.parse(decodeURIComponent(binary)); } catch (e) {}
+            try { return JSON.parse(decodeURIComponent(escape(binary))); } catch (e) {}
+            return {};
+        }
     } catch (e) {
+        console.error("Decoding error:", e);
         return {};
     }
 };
@@ -32,6 +52,15 @@ const preLoadImages = () => {
     });
 };
 preLoadImages();
+
+// Mobile Detection
+const checkMobile = () => {
+    const isMobile = window.innerWidth < 768 || ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+    if (isMobile) {
+        document.getElementById('mobile-restriction').classList.remove('hidden');
+    }
+};
+checkMobile();
 
 const texts = {
     am: {
