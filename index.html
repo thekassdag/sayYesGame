@@ -4,137 +4,127 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>እስኪ እምቢ በይ - Game</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-        body {
-            margin: 0;
-            width: 100%;
-            height: 100%;
-            position: relative;
+    <title>say yes - እስኪ እሺ በይ - Game</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        outfit: ['Outfit', 'sans-serif'],
+                    },
+                    backgroundImage: {
+                        'chat-main': "linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)), url('assets/imgs/romance-6781983.jpg')",
+                        'chat-success': "linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.3)), url('assets/imgs/yeyesyes.gif')",
+                    },
+                    colors: {
+                        premium: '#BF871F',
+                        'premium-hover': '#d49a2a',
+                    },
+                    boxShadow: {
+                        'premium-normal': '0 4px 14px 0 rgba(191, 135, 31, 0.39)',
+                        'premium-hover': '0 6px 20px rgba(191, 135, 31, 0.45)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.37)',
+                    }
+                }
+            }
         }
-
-        .chat-bg,.chat-bg-2 {
-            margin: 0;
-            height: 100vh;
-            background-image: url(assets/imgs/romance-6781983.jpg);
-            background-size: cover;
-            background-position: 0px 35%;
-            background-repeat: no-repeat;
-            opacity: 0.9;
-        }
-
-        .chat-bg-2 {
-            background-image: url('assets/imgs/yeyesyes.gif');
-            opacity: 0.6;
-        }
-
-        .chat-1,
-        .chat-2,
-        .chat-0 {
-            position: absolute;
-        }
-
-        .chat-0 {
-            top: 5%;
-            left: 40%;
-        }
-
-        .chat-1 {
-            top: 26%;
-            left: 26%;
-        }
-
-        .chat-2 {
-            top: 55%;
-            left: 55%;
-        }
-
-        .btn-primary {
-            background-color: #BF871F;
-            cursor: pointer;
-        }
-
-        .card {
-            background-color: #882400d0;
-            color: #fff;
-            border-radius: 16px;
-        }
-
-        #no {
-            position: absolute;
-            transition: .1s;
-        }
-
-        img.bg {
-            width: 500px;
-            height: 130px;
-        }
-
-        p.msg {
-            position: relative;
-            top: -110px;
-            left: 25%;
-            width: 50%;
-            font-weight: 400;
-            font-size: 18px;
-            color: #fff;
-        }
-    </style>
+    </script>
 </head>
 
-<body>
-    <div class="bg chat-bg"></div>
+<body class="h-screen w-full relative font-outfit overflow-hidden">
+    <div id="bg-container"
+        class="absolute inset-0 bg-chat-main bg-cover bg-[center_35%] transition-all duration-500 ease-in-out"></div>
 
-    <div class="chat-0">
-        <div class="card w-100">
-            <div class="card-body">
-                <p class="card-text">እስኪ እሺ በይ - Game</p>
+    <!-- Title Section -->
+    <div class="absolute top-[5%] left-1/2 -translate-x-1/2 w-4/5 max-w-md z-10 text-center">
+        <div class="bg-[#882400d0] backdrop-blur-md border border-white/10 shadow-glass rounded-2xl p-4">
+            <h1 class="text-white text-xl font-semibold tracking-wide">say yes - እስኪ እሺ በይ - Game</h1>
+        </div>
+    </div>
+
+    <!-- Speech Bubble Section -->
+    <div id="bubble-wrapper"
+        class="absolute top-[28%] left-1/2 -translate-x-1/2 w-full flex justify-center z-10 px-4 transition-all duration-500">
+        <div id="bubble-container"
+            class="relative max-w-lg w-full min-h-[140px] bg-[#882400d0] backdrop-blur-md border border-white/10 shadow-glass rounded-[2rem] p-8 flex items-center justify-center transition-all duration-500 after:content-[''] after:absolute after:bottom-[-15px] after:left-1/2 after:-translate-x-1/2 after:w-0 after:border-t-[15px] after:border-t-[#882400d0] after:border-l-[15px] after:border-l-transparent after:border-r-[15px] after:border-r-transparent">
+            <p id="chat-msg"
+                class="w-full text-center text-white text-base md:text-xl font-medium leading-relaxed break-words">
+                ጨዋታው 'እሺ OR እምቢ' ማለት ነው:: <br>እንጀምር?</p>
+        </div>
+    </div>
+
+    <!-- Buttons Section -->
+    <div id="controls" class="absolute bottom-[20%] left-1/2 -translate-x-1/2 z-20 w-4/5 max-w-sm">
+        <div
+            class="bg-[#882400d0] backdrop-blur-md border border-white/10 shadow-glass rounded-2xl p-6 flex justify-center gap-4">
+            <button id="start"
+                class="bg-premium text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-premium-normal transition-all duration-300 hover:bg-premium-hover hover:-translate-y-0.5 hover:shadow-premium-hover active:translate-y-0">እንጀምር</button>
+            <button id="yes"
+                class="bg-premium text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-premium-normal transition-all duration-300 hover:bg-premium-hover hover:-translate-y-0.5 hover:shadow-premium-hover active:translate-y-0 hidden">እሺ</button>
+            <button id="no"
+                class="bg-premium text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-premium-normal transition-all duration-300 hover:bg-premium-hover hover:-translate-y-0.5 hover:shadow-premium-hover active:translate-y-0 hidden absolute pointer-events-auto z-[100]">እምቢ</button>
+            <button id="create-own"
+                class="bg-white/10 border border-white/20 text-white px-8 py-3 rounded-xl font-semibold text-lg shadow-glass transition-all duration-300 hover:bg-white/20 hover:-translate-y-0.5 active:translate-y-0 hidden">Create Your Own</button>
+        </div>
+    </div>
+    <!-- Configuration Modal -->
+    <div id="config-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden">
+        <div class="relative bg-[#882400d0] backdrop-blur-xl border border-white/20 p-8 rounded-3xl shadow-glass w-full max-w-lg animate-in zoom-in-95 duration-300">
+            <button id="close-modal" class="absolute top-4 right-4 text-white/50 hover:text-white transition-colors">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+            <h2 class="text-2xl font-bold text-white mb-6 text-center">Customize Your Game</h2>
+            <form id="config-form" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-white/80 mb-1">Recipient Name</label>
+                    <input type="text" id="input-name" placeholder="e.g. Sarah" required
+                        class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-premium">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-white/80 mb-1">Recipient Gender</label>
+                    <select id="input-gender" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-premium">
+                        <option value="f" class="bg-[#882400]">Female</option>
+                        <option value="m" class="bg-[#882400]">Male</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-white/80 mb-1">Language</label>
+                    <select id="input-lang" class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-premium">
+                        <option value="am" class="bg-[#882400]">Amharic</option>
+                        <option value="en" class="bg-[#882400]">English</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-white/80 mb-1">Custom Question (Optional)</label>
+                    <textarea id="input-question" placeholder="e.g. Will you go out with me?"
+                        class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-premium h-20 resize-none"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-white/80 mb-1">Success Message (Optional)</label>
+                    <input type="text" id="input-sucess-msg" placeholder="e.g. Yay! I knew you'd say yes!"
+                        class="w-full bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-premium">
+                </div>
+                <div class="pt-4">
+                    <button type="submit"
+                        class="w-full bg-premium text-white py-3 rounded-xl font-semibold shadow-premium-normal hover:bg-premium-hover transition-all">Generate Link</button>
+                </div>
+            </form>
+            <div id="result-container" class="mt-6 hidden">
+                <p class="text-sm text-white/80 mb-2">Share this link:</p>
+                <div class="flex gap-2">
+                    <input type="text" id="generated-link" readonly
+                        class="flex-1 bg-white/10 border border-white/20 rounded-xl px-4 py-2 text-white text-sm focus:outline-none cursor-not-allowed">
+                    <button id="copy-btn" class="bg-premium px-4 py-2 rounded-xl text-sm font-semibold hover:bg-premium-hover transition-all">Copy</button>
+                </div>
             </div>
         </div>
     </div>
-    <div class="chat-1 chat">
-        <image src="assets/imgs/speech_bubble.png" class="bg">
-            <p class="msg">ጨዋታው 'እሺ OR እምቢ' ማለት ነው:: እንጀምር?</p>
-    </div>
-    <div class="chat-2">
-        <div class="card w-100">
-            <div class="card-body reply">
-                <button id="start" class="btn btn-primary">እንጀምር</button>
-                <button id="yes" class="btn btn-primary mr-2" style="display: none;">እሺ</button>
-                <button id="no" class="btn btn-primary" style="display: none;">እምቢ</button>
-            </div>
-        </div>
-    </div>
-    <script>
-        const noBtn = document.getElementById('no');
-        const yesBtn = document.getElementById('yes');
-        const startBtn = document.getElementById('start')
-        const chat1 = document.querySelector(".chat-1 p")
 
-        startBtn.addEventListener("click", function () {
-            chat1.textContent = "የምትወጂውን Chocolate ገዝቼልሽ, በገንደጄ street walk እናርግ?"
-            this.style.display = "none"
-            yesBtn.style.display = "inline"
-            noBtn.style.display = "inline"
-        })
-        noBtn.addEventListener('mouseover', function () {
-            const leftPos = Math.random() * 450;
-            const topPos = Math.random() * 250;
-
-            // Set the button's position
-            noBtn.style.left = `${leftPos}%`;
-            noBtn.style.top = `${topPos}%`;
-            chat1.textContent = 'እሺ በይ!!!(please)'
-        })
-        yes.addEventListener("click", () => {
-            chat1.textContent = 'yes yes yes!! let\'s go'
-            document.querySelector(".reply").style.display = "none"
-            document.querySelector(".bg").classList.remove("chat-bg")
-            document.querySelector(".bg").classList.add("chat-bg-2")
-        })
-    </script>
+    <script src="assets/js/script.js"></script>
 </body>
 
 </html>
